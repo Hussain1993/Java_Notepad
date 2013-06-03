@@ -29,7 +29,7 @@ public class Notepad extends JFrame {
     private static JMenuItem pasteMenuItem;
 
     public Notepad(){
-        setTitle("Notepad");
+        setTitle("Untitled");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(new Dimension(600,400));
         initWidgets();
@@ -75,7 +75,7 @@ public class Notepad extends JFrame {
         this.setJMenuBar(menuBar);
     }
 
-    private static void actionListerners(){
+    private void actionListerners(){
         /*
         This is the action listener for the save button
          */
@@ -97,6 +97,8 @@ public class Notepad extends JFrame {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(save.getSelectedFile().getPath()+ext));
                         writer.write(textArea.getText());
                         writer.close();
+                        saved = true;
+                        Notepad.this.setTitle(save.getSelectedFile().getName());
                     }
                     catch(Exception exception){
                         System.out.println(exception.getMessage());
