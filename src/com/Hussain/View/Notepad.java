@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
@@ -37,6 +39,7 @@ public class Notepad extends JFrame {
         addWidgets();
         actionListerners();
         saved = false;
+        windowListener();
     }
 
     private void initWidgets(){
@@ -119,11 +122,7 @@ public class Notepad extends JFrame {
                 }
                 else
                 {
-                    int choice = JOptionPane.showConfirmDialog(null,"Are you sure","Are you sure",JOptionPane.YES_NO_OPTION);
-                    if(choice == 0)
-                    {
-                        System.exit(0);
-                    }
+                    showSaveDialog();
                 }
             }
         });
@@ -158,4 +157,28 @@ public class Notepad extends JFrame {
             }
         });
     }//end method actionListerners
+
+    private void windowListener(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                if(saved)
+                {
+                    super.windowClosing(windowEvent);
+                }
+                else
+                {
+                    showSaveDialog();
+                }
+            }
+        });
+    }
+
+    private void showSaveDialog(){
+        int choice = JOptionPane.showConfirmDialog(null,"You have not saved the file, are you sure you want to close the application?","Save before Quitting",JOptionPane.YES_NO_OPTION);
+        if(choice == 0)
+        {
+            System.exit(0);
+        }
+    }
 }
