@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +27,7 @@ public class Notepad extends JFrame {
     private static JMenuBar menuBar;
     private static JMenu fileMenu;
     private static JMenu editMenu;
+    private static JMenuItem openMenuItem;
     private static JMenuItem saveMenuItem;
     private static JMenuItem closeMenuItem;
     private static JMenuItem cutMenuItem;
@@ -32,7 +36,7 @@ public class Notepad extends JFrame {
 
     public Notepad(){
         setTitle("Untitled");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(new Dimension(600,400));
         initWidgets();
         setLayout();
@@ -50,6 +54,7 @@ public class Notepad extends JFrame {
         fileMenu = new JMenu("File");
         editMenu = new JMenu("Edit");
 
+        openMenuItem = new JMenuItem("Open");
         saveMenuItem = new JMenuItem("Save");
         closeMenuItem = new JMenuItem("Close");
 
@@ -60,7 +65,9 @@ public class Notepad extends JFrame {
         menuBar.add(fileMenu);
         menuBar.add(editMenu);
 
+        fileMenu.add(openMenuItem);
         fileMenu.add(saveMenuItem);
+        fileMenu.addSeparator();
         fileMenu.add(closeMenuItem);
 
         editMenu.add(cutMenuItem);
@@ -79,6 +86,32 @@ public class Notepad extends JFrame {
     }
 
     private void actionListerners(){
+        /*
+        This is the action listener for the open button
+         */
+        openMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser open = new JFileChooser();
+                int option = open.showOpenDialog(null);
+                if(option == JFileChooser.APPROVE_OPTION)
+                {
+                    textArea.setText("");
+                    try{
+                        Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
+                        Notepad.this.setTitle(open.getSelectedFile().getName());
+                        while(scan.hasNext())
+                        {
+                            textArea.append(scan.nextLine());
+                        }
+                    }
+                    catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
         /*
         This is the action listener for the save button
          */
