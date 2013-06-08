@@ -10,7 +10,10 @@ import com.Hussain.View.Notepad;
  *
  */
 public class MainApp {
-    //This is where it all begins
+    /**
+     * This is where it all begins
+     * @param args
+     */
     public static void main(String [] args){
         new Notepad().setVisible(true);
     }

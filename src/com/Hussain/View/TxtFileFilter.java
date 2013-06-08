@@ -9,6 +9,11 @@ import java.io.File;
  * Date: 03/06/2013
  * Time: 15:25
  * Project Name: Notepad
+ *
+ * This is class that enables the
+ * user to save the document that they want to
+ * save as a .txt file. This is used in conjunction with the
+ * JFileChooser
  */
 public class TxtFileFilter extends FileFilter {
     @Override

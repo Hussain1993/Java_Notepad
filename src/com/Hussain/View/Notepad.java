@@ -34,6 +34,10 @@ public class Notepad extends JFrame {
     private static JMenuItem copyMenuItem;
     private static JMenuItem pasteMenuItem;
 
+    /**
+     * This is the constructor for
+     * this class
+     */
     public Notepad(){
         setTitle("Untitled");
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -46,6 +50,10 @@ public class Notepad extends JFrame {
         windowListener();
     }
 
+    /**
+     *   This is where the Java Swing widgets
+     *   are being initialised
+     */
     private void initWidgets(){
         textArea = new JTextArea();
         textArea.setLineWrap(true);
@@ -76,15 +84,28 @@ public class Notepad extends JFrame {
 
     }
 
+    /**
+     * This is where the layout of the
+     * window is being set
+     */
     private void setLayout(){
         setLayout(new BorderLayout());
     }
 
+    /**
+     * This method is adding in the
+     * widgets to the window
+     */
     private void addWidgets(){
          add(new JScrollPane(textArea),BorderLayout.CENTER);
         this.setJMenuBar(menuBar);
     }
 
+    /**
+     * This is a method to add all the
+     * action listeners for the menu
+     * items
+     */
     private void actionListerners(){
         /*
         This is the action listener for the open button
@@ -99,7 +120,7 @@ public class Notepad extends JFrame {
                     textArea.setText("");
                     try{
                         Scanner scan = new Scanner(new FileReader(open.getSelectedFile().getPath()));
-                        Notepad.this.setTitle(open.getSelectedFile().getName());
+                        Notepad.this.setTitle(open.getSelectedFile().getName());//Set the window title to the file that is being opened
                         while(scan.hasNext())
                         {
                             textArea.append(scan.nextLine());
@@ -191,6 +212,11 @@ public class Notepad extends JFrame {
         });
     }//end method actionListerners
 
+    /**
+     * This is a method to show the user if they
+     * try to close the window without saving the
+     * file first
+     */
     private void windowListener(){
         addWindowListener(new WindowAdapter() {
             @Override
@@ -207,6 +233,10 @@ public class Notepad extends JFrame {
         });
     }
 
+    /**
+     * This is a method to show a dialog warning the
+     * user that they have not saved the file
+     */
     private void showSaveDialog(){
         int choice = JOptionPane.showConfirmDialog(null,"You have not saved the file, are you sure you want to close the application?","Save before Quitting",JOptionPane.YES_NO_OPTION);
         if(choice == 0)
